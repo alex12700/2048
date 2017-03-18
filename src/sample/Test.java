@@ -18,6 +18,7 @@ public class Test {
 
         Random rand = new Random();
 
+
         int amount_start = 0;
         while (amount_start < 16) {
             int two_start = rand.nextBoolean() ? 2 : 4;
