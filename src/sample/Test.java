@@ -42,8 +42,8 @@ public class Test {
         pause(1);
 
         for (int j = 0; j < 4; j++) {
-            for (int i = 0; i < 4; i++) {
-                for (int k = i + 1; k < 4; k++) {
+            for (int i = 3; i >= 0; i--) {
+                for (int k = i-1; k >= 0; k--) {
                     if (x[k][j] != 0) {
                         if (x[i][j] == 0) {
                             x[i][j] = x[k][j];

@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="sample.Controller">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="666.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
         <children>
             <Pane layoutX="-1.0" prefHeight="400.0" prefWidth="400.0">
@@ -47,10 +47,10 @@
                     <Text fx:id="text4" layoutX="336.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                 </children>
             </Pane>
-            <Button layoutX="434.0" layoutY="225.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="65.0" text="left" />
+            <Button layoutX="434.0" layoutY="225.0" mnemonicParsing="false" onAction="#left" prefHeight="50.0" prefWidth="65.0" text="left" />
             <Button layoutX="499.0" layoutY="175.0" mnemonicParsing="false" onAction="#up" prefHeight="50.0" prefWidth="65.0" text="up" />
             <Button layoutX="564.0" layoutY="225.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="65.0" text="right" />
-            <Button layoutX="499.0" layoutY="275.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="65.0" text="down" />
+            <Button layoutX="499.0" layoutY="275.0" mnemonicParsing="false" onAction="#down" prefHeight="50.0" prefWidth="65.0" text="down" />
             <Button layoutX="450.0" layoutY="14.0" mnemonicParsing="false" onAction="#start_game" prefHeight="93.0" prefWidth="163.0" text="start" />
         </children>
     </Pane>
