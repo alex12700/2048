@@ -24,7 +24,8 @@ public class Controller {
     private void create_new_cells(int[][] x, Text[][] texts, Rectangle[][] rectangles) {
         Random rand = new Random();
         byte brake = 0;
-        end: for (int i = 0; i < x.length; i++) {
+        end:
+        for (int i = 0; i < x.length; i++) {
             for (int j = 0; j < x[i].length; j++) {
                 if (x[i][j] == 0) {
                     brake++;
@@ -35,8 +36,8 @@ public class Controller {
                         int start_positionY = rand.nextInt(4);
                         if (x[start_positionX][start_positionY] == 0) {
                             x[start_positionX][start_positionY] = two_start;
-                            //rectangles[start_positionX][start_positionY].setVisible(true);
-                            rectangles[start_positionX][start_positionY].setFill(x[start_positionX][start_positionY]==2?Color.BEIGE:Color.BLUE);
+                            rectangles[start_positionX][start_positionY].setFill(x[start_positionX][start_positionY] == 2 ?
+                                    Color.rgb(255,255,255) : Color.rgb(200,200,200));
                             texts[start_positionX][start_positionY].setText(Integer.toString(two_start));
                             texts[start_positionX][start_positionY].setVisible(true);
                             amount_start++;
@@ -58,11 +59,10 @@ public class Controller {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 texts[i][j].setVisible(false);
-                rectangles[i][j].setFill(Color.WHITE);
+                rectangles[i][j].setFill(Color.GRAY);
                 cells[i][j] = 0;
             }
         }
-
         create_new_cells(cells, texts, rectangles);
     }
 
@@ -83,18 +83,44 @@ public class Controller {
                             cells[i][j] = cells[k][j];
                             texts[i][j].setText(String.valueOf(cells[i][j]));
                             texts[i][j].setVisible(true);
+                            rectangles[i][j].setFill(rectangles[k][j].getFill());
                             cells[k][j] = 0;
                             texts[k][j].setText(String.valueOf(cells[k][j]));
                             texts[k][j].setVisible(false);
+                            rectangles[k][j].setFill(Color.GRAY);
                         } else {
                             if (cells[i][j] == cells[k][j]) {
                                 creation = true;
                                 cells[i][j] += cells[k][j];
                                 texts[i][j].setText(String.valueOf(cells[i][j]));
                                 texts[i][j].setVisible(true);
+                                switch (cells[i][j]){
+                                    case 4:     rectangles[i][j].setFill(Color.rgb(200,200,200));break;
+                                    case 8:     rectangles[i][j].setFill(Color.rgb(0,255,255));break;
+                                    case 16:    rectangles[i][j].setFill(Color.rgb(0,255,0));break;
+                                    case 32:    rectangles[i][j].setFill(Color.rgb(0,255,100));break;
+                                    case 64:    rectangles[i][j].setFill(Color.rgb(255,0,0));break;
+                                    case 128:   rectangles[i][j].setFill(Color.rgb(0,100,255));break;
+                                    case 256:   rectangles[i][j].setFill(Color.rgb(255,255,0));break;
+                                    case 512:   rectangles[i][j].setFill(Color.rgb(0,0,255));break;
+                                    case 1024:  rectangles[i][j].setFill(Color.rgb(255,0,255));break;
+                                    case 2048:  rectangles[i][j].setFill(Color.rgb(0,0,0));break;
+                                }
+                                //        rect1.setFill(Color.rgb(255,255,255));              //2
+                                //        rect2.setFill(Color.rgb(200,200,200));              //4
+                                //        rect3.setFill(Color.rgb(0,255,255));                //8
+                                //        rect4.setFill(Color.rgb(0,255,0));                  //16
+                                //        rect5.setFill(Color.rgb(0,255,100));                //32
+                                //        rect6.setFill(Color.rgb(255,0,0));                  //64
+                                //        rect7.setFill(Color.rgb(0,100,255));                //128
+                                //        rect8.setFill(Color.rgb(255,255,0));                //256
+                                //        rect9.setFill(Color.rgb(0,0,255));                  //512
+                                //        rect10.setFill(Color.rgb(255,0,255));               //1024
+                                //        rect11.setFill(Color.rgb(0,0,0));                   //2048
                                 cells[k][j] = 0;
                                 texts[k][j].setText(String.valueOf(cells[k][j]));
                                 texts[k][j].setVisible(false);
+                                rectangles[k][j].setFill(Color.GRAY);
                             }
                             break;
                         }
