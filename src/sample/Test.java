@@ -1,5 +1,6 @@
 package sample;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -15,6 +16,37 @@ public class Test {
 
     public static void main(String[] args) {
         int x[][] = new int[4][4];
+        int t[][] = new int[4][4];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                x[i][j] = 0;
+                t[i][j] = x[i][j];
+            }
+        }
+//        Arrays.fill(t,9);
+//        Arrays.fill(x,9);
+        System.out.println(Arrays.equals(t,x));
+        int[][] a1 = new int[10][4];
+        int[][] a2 = new int[10][4];
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 4; j++) {
+                a1[i][j] = 9;
+                a2[i][j] = a1[i][j];
+            }
+        }
+
+        int[] q = new int[4];
+        int[] w = new int[4];
+        for (int i = 0; i < 4; i++) {
+            q[i] = 0;
+            w[i] = 0;
+        }
+        System.out.println(Arrays.equals(q,w));
+        System.out.println(q[2] == w[2]);
+// заполняем их девятками
+//        Arrays.fill(a1, 9);
+//        Arrays.fill(a2, 9);
+//        System.out.println("Сравним: " + Arrays.equals(a1, a2));
 
         Random rand = new Random();
 
@@ -43,7 +75,7 @@ public class Test {
 
         for (int j = 0; j < 4; j++) {
             for (int i = 3; i >= 0; i--) {
-                for (int k = i-1; k >= 0; k--) {
+                for (int k = i - 1; k >= 0; k--) {
                     if (x[k][j] != 0) {
                         if (x[i][j] == 0) {
                             x[i][j] = x[k][j];
@@ -66,5 +98,6 @@ public class Test {
             }
             System.out.println();
         }
+        System.out.println();
     }
 }
