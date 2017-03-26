@@ -24,7 +24,7 @@ public class Controller {
     private void create_new_cells(int[][] x, Text[][] texts, Rectangle[][] rectangles) {
         Random rand = new Random();
         byte brake = 0;
-        end:
+        endOfCreation:
         for (int i = 0; i < x.length; i++) {
             for (int j = 0; j < x[i].length; j++) {
                 if (x[i][j] == 0) {
@@ -37,17 +37,98 @@ public class Controller {
                         if (x[start_positionX][start_positionY] == 0) {
                             x[start_positionX][start_positionY] = two_start;
                             rectangles[start_positionX][start_positionY].setFill(x[start_positionX][start_positionY] == 2 ?
-                                    Color.rgb(255,255,255) : Color.rgb(200,200,200));
+                                    Color.rgb(255, 255, 255) : Color.rgb(200, 200, 200));
                             texts[start_positionX][start_positionY].setText(Integer.toString(two_start));
                             texts[start_positionX][start_positionY].setVisible(true);
                             amount_start++;
                         }
                     }
-                    if (brake == 2) break end;
+                    if (brake == 2) break endOfCreation;
                 }
             }
         }
 
+        boolean creation = false;
+
+        creationLabel:
+        {
+            for (int j = 0; j < 4; j++) {
+                for (int i = 3; i >= 0; i--) {
+                    for (int k = i - 1; k >= 0; k--) {
+                        if (cells[k][j] != 0) {
+                            if (cells[i][j] == 0) {
+                                creation = true;
+                                break creationLabel;
+                            } else {
+                                if (cells[i][j] == cells[k][j]) {
+                                    creation = true;
+                                    break creationLabel;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+                for (int i = 0; i < 4; i++) {
+                    for (int k = i + 1; k < 4; k++) {
+                        if (cells[k][j] != 0) {
+                            if (cells[i][j] == 0) {
+                                creation = true;
+                                break creationLabel;
+                            } else {
+                                if (cells[i][j] == cells[k][j]) {
+                                    creation = true;
+                                    break creationLabel;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    for (int k = j + 1; k < 4; k++) {
+                        if (cells[i][k] != 0) {
+                            if (cells[i][j] == 0) {
+                                creation = true;
+                                break creationLabel;
+                            } else {
+                                if (cells[i][j] == cells[i][k]) {
+                                    creation = true;
+                                    break creationLabel;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+                for (int j = 3; j >= 0; j--) {
+                    for (int k = j - 1; k >= 0; k--) {
+                        if (cells[i][k] != 0) {
+                            if (cells[i][j] == 0) {
+                                creation = true;
+                                break creationLabel;
+                            } else {
+                                if (cells[i][j] == cells[i][k]) {
+                                    creation = true;
+                                    break creationLabel;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (!creation) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("the end");
+            alert.setHeaderText(null);
+            alert.setContentText("DOOOOOOOM");
+            alert.showAndWait();
+            //start_game();
+        }
     }
 
     public void start_game() {
@@ -95,17 +176,37 @@ public class Controller {
                                 cells[i][j] += cells[k][j];
                                 texts[i][j].setText(String.valueOf(cells[i][j]));
                                 texts[i][j].setVisible(true);
-                                switch (cells[i][j]){
-                                    case 4:     rectangles[i][j].setFill(Color.rgb(200,200,200));break;
-                                    case 8:     rectangles[i][j].setFill(Color.rgb(0,255,255));break;
-                                    case 16:    rectangles[i][j].setFill(Color.rgb(0,255,0));break;
-                                    case 32:    rectangles[i][j].setFill(Color.rgb(0,255,100));break;
-                                    case 64:    rectangles[i][j].setFill(Color.rgb(255,0,0));break;
-                                    case 128:   rectangles[i][j].setFill(Color.rgb(0,100,255));break;
-                                    case 256:   rectangles[i][j].setFill(Color.rgb(255,255,0));break;
-                                    case 512:   rectangles[i][j].setFill(Color.rgb(0,0,255));break;
-                                    case 1024:  rectangles[i][j].setFill(Color.rgb(255,0,255));break;
-                                    case 2048:  rectangles[i][j].setFill(Color.rgb(0,0,0));break;
+                                switch (cells[i][j]) {
+                                    case 4:
+                                        rectangles[i][j].setFill(Color.rgb(200, 200, 200));
+                                        break;
+                                    case 8:
+                                        rectangles[i][j].setFill(Color.rgb(0, 255, 255));
+                                        break;
+                                    case 16:
+                                        rectangles[i][j].setFill(Color.rgb(0, 255, 0));
+                                        break;
+                                    case 32:
+                                        rectangles[i][j].setFill(Color.rgb(0, 255, 100));
+                                        break;
+                                    case 64:
+                                        rectangles[i][j].setFill(Color.rgb(255, 0, 0));
+                                        break;
+                                    case 128:
+                                        rectangles[i][j].setFill(Color.rgb(0, 100, 255));
+                                        break;
+                                    case 256:
+                                        rectangles[i][j].setFill(Color.rgb(255, 255, 0));
+                                        break;
+                                    case 512:
+                                        rectangles[i][j].setFill(Color.rgb(0, 0, 255));
+                                        break;
+                                    case 1024:
+                                        rectangles[i][j].setFill(Color.rgb(255, 0, 255));
+                                        break;
+                                    case 2048:
+                                        rectangles[i][j].setFill(Color.rgb(0, 0, 0));
+                                        break;
                                 }
                                 //        rect1.setFill(Color.rgb(255,255,255));              //2
                                 //        rect2.setFill(Color.rgb(200,200,200));              //4
@@ -161,17 +262,37 @@ public class Controller {
                                 cells[i][j] += cells[k][j];
                                 texts[i][j].setText(String.valueOf(cells[i][j]));
                                 texts[i][j].setVisible(true);
-                                switch (cells[i][j]){
-                                    case 4:     rectangles[i][j].setFill(Color.rgb(200,200,200));break;
-                                    case 8:     rectangles[i][j].setFill(Color.rgb(0,255,255));break;
-                                    case 16:    rectangles[i][j].setFill(Color.rgb(0,255,0));break;
-                                    case 32:    rectangles[i][j].setFill(Color.rgb(0,255,100));break;
-                                    case 64:    rectangles[i][j].setFill(Color.rgb(255,0,0));break;
-                                    case 128:   rectangles[i][j].setFill(Color.rgb(0,100,255));break;
-                                    case 256:   rectangles[i][j].setFill(Color.rgb(255,255,0));break;
-                                    case 512:   rectangles[i][j].setFill(Color.rgb(0,0,255));break;
-                                    case 1024:  rectangles[i][j].setFill(Color.rgb(255,0,255));break;
-                                    case 2048:  rectangles[i][j].setFill(Color.rgb(0,0,0));break;
+                                switch (cells[i][j]) {
+                                    case 4:
+                                        rectangles[i][j].setFill(Color.rgb(200, 200, 200));
+                                        break;
+                                    case 8:
+                                        rectangles[i][j].setFill(Color.rgb(0, 255, 255));
+                                        break;
+                                    case 16:
+                                        rectangles[i][j].setFill(Color.rgb(0, 255, 0));
+                                        break;
+                                    case 32:
+                                        rectangles[i][j].setFill(Color.rgb(0, 255, 100));
+                                        break;
+                                    case 64:
+                                        rectangles[i][j].setFill(Color.rgb(255, 0, 0));
+                                        break;
+                                    case 128:
+                                        rectangles[i][j].setFill(Color.rgb(0, 100, 255));
+                                        break;
+                                    case 256:
+                                        rectangles[i][j].setFill(Color.rgb(255, 255, 0));
+                                        break;
+                                    case 512:
+                                        rectangles[i][j].setFill(Color.rgb(0, 0, 255));
+                                        break;
+                                    case 1024:
+                                        rectangles[i][j].setFill(Color.rgb(255, 0, 255));
+                                        break;
+                                    case 2048:
+                                        rectangles[i][j].setFill(Color.rgb(0, 0, 0));
+                                        break;
                                 }
                                 cells[k][j] = 0;
                                 texts[k][j].setText(String.valueOf(cells[k][j]));
@@ -216,17 +337,37 @@ public class Controller {
                                 cells[i][j] += cells[i][k];
                                 texts[i][j].setText(String.valueOf(cells[i][j]));
                                 texts[i][j].setVisible(true);
-                                switch (cells[i][j]){
-                                    case 4:     rectangles[i][j].setFill(Color.rgb(200,200,200));break;
-                                    case 8:     rectangles[i][j].setFill(Color.rgb(0,255,255));break;
-                                    case 16:    rectangles[i][j].setFill(Color.rgb(0,255,0));break;
-                                    case 32:    rectangles[i][j].setFill(Color.rgb(0,255,100));break;
-                                    case 64:    rectangles[i][j].setFill(Color.rgb(255,0,0));break;
-                                    case 128:   rectangles[i][j].setFill(Color.rgb(0,100,255));break;
-                                    case 256:   rectangles[i][j].setFill(Color.rgb(255,255,0));break;
-                                    case 512:   rectangles[i][j].setFill(Color.rgb(0,0,255));break;
-                                    case 1024:  rectangles[i][j].setFill(Color.rgb(255,0,255));break;
-                                    case 2048:  rectangles[i][j].setFill(Color.rgb(0,0,0));break;
+                                switch (cells[i][j]) {
+                                    case 4:
+                                        rectangles[i][j].setFill(Color.rgb(200, 200, 200));
+                                        break;
+                                    case 8:
+                                        rectangles[i][j].setFill(Color.rgb(0, 255, 255));
+                                        break;
+                                    case 16:
+                                        rectangles[i][j].setFill(Color.rgb(0, 255, 0));
+                                        break;
+                                    case 32:
+                                        rectangles[i][j].setFill(Color.rgb(0, 255, 100));
+                                        break;
+                                    case 64:
+                                        rectangles[i][j].setFill(Color.rgb(255, 0, 0));
+                                        break;
+                                    case 128:
+                                        rectangles[i][j].setFill(Color.rgb(0, 100, 255));
+                                        break;
+                                    case 256:
+                                        rectangles[i][j].setFill(Color.rgb(255, 255, 0));
+                                        break;
+                                    case 512:
+                                        rectangles[i][j].setFill(Color.rgb(0, 0, 255));
+                                        break;
+                                    case 1024:
+                                        rectangles[i][j].setFill(Color.rgb(255, 0, 255));
+                                        break;
+                                    case 2048:
+                                        rectangles[i][j].setFill(Color.rgb(0, 0, 0));
+                                        break;
                                 }
                                 cells[i][k] = 0;
                                 texts[i][k].setText(String.valueOf(cells[i][k]));
@@ -271,17 +412,37 @@ public class Controller {
                                 cells[i][j] += cells[i][k];
                                 texts[i][j].setText(String.valueOf(cells[i][j]));
                                 texts[i][j].setVisible(true);
-                                switch (cells[i][j]){
-                                    case 4:     rectangles[i][j].setFill(Color.rgb(200,200,200));break;
-                                    case 8:     rectangles[i][j].setFill(Color.rgb(0,255,255));break;
-                                    case 16:    rectangles[i][j].setFill(Color.rgb(0,255,0));break;
-                                    case 32:    rectangles[i][j].setFill(Color.rgb(0,255,100));break;
-                                    case 64:    rectangles[i][j].setFill(Color.rgb(255,0,0));break;
-                                    case 128:   rectangles[i][j].setFill(Color.rgb(0,100,255));break;
-                                    case 256:   rectangles[i][j].setFill(Color.rgb(255,255,0));break;
-                                    case 512:   rectangles[i][j].setFill(Color.rgb(0,0,255));break;
-                                    case 1024:  rectangles[i][j].setFill(Color.rgb(255,0,255));break;
-                                    case 2048:  rectangles[i][j].setFill(Color.rgb(0,0,0));break;
+                                switch (cells[i][j]) {
+                                    case 4:
+                                        rectangles[i][j].setFill(Color.rgb(200, 200, 200));
+                                        break;
+                                    case 8:
+                                        rectangles[i][j].setFill(Color.rgb(0, 255, 255));
+                                        break;
+                                    case 16:
+                                        rectangles[i][j].setFill(Color.rgb(0, 255, 0));
+                                        break;
+                                    case 32:
+                                        rectangles[i][j].setFill(Color.rgb(0, 255, 100));
+                                        break;
+                                    case 64:
+                                        rectangles[i][j].setFill(Color.rgb(255, 0, 0));
+                                        break;
+                                    case 128:
+                                        rectangles[i][j].setFill(Color.rgb(0, 100, 255));
+                                        break;
+                                    case 256:
+                                        rectangles[i][j].setFill(Color.rgb(255, 255, 0));
+                                        break;
+                                    case 512:
+                                        rectangles[i][j].setFill(Color.rgb(0, 0, 255));
+                                        break;
+                                    case 1024:
+                                        rectangles[i][j].setFill(Color.rgb(255, 0, 255));
+                                        break;
+                                    case 2048:
+                                        rectangles[i][j].setFill(Color.rgb(0, 0, 0));
+                                        break;
                                 }
                                 cells[i][k] = 0;
                                 texts[i][k].setText(String.valueOf(cells[i][k]));

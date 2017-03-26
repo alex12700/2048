@@ -112,7 +112,7 @@
             <font>
                <Font name="Comic Sans MS Bold" size="15.0" />
             </font></Button>
-            <Button layoutX="450.0" layoutY="14.0" mnemonicParsing="false" onAction="#start_game" prefHeight="93.0" prefWidth="163.0" text="start" textAlignment="CENTER">
+            <Button layoutX="450.0" layoutY="50.0" mnemonicParsing="false" onAction="#start_game" prefHeight="93.0" prefWidth="163.0" text="start" textAlignment="CENTER">
             <font>
                <Font name="Comic Sans MS Bold" size="39.0" />
             </font></Button>
